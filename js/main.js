@@ -23,17 +23,13 @@ document.addEventListener(`keydown`, function (evt) {
 
   if (!evt.altKey) {
     return;
-  } else if (evt.keyCode === rightArrow) {
-    if (startScreenIndex < screens.length - 1) {
-      startScreenIndex += 1;
-      renderScreen(startScreenIndex);
-    }
-  } else if (evt.keyCode === leftArrow) {
-    if (startScreenIndex > 0) {
-      startScreenIndex -= 1;
-      renderScreen(startScreenIndex);
-    }
   }
+  if (evt.keyCode === rightArrow && startScreenIndex < screens.length - 1) {
+    startScreenIndex += 1;
+    renderScreen(startScreenIndex);
 
-
+  } else if (evt.keyCode === leftArrow && startScreenIndex > 0) {
+    startScreenIndex -= 1;
+    renderScreen(startScreenIndex);
+  }
 });
