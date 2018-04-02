@@ -1,28 +1,54 @@
-const leftArrow = 37;
-const rightArrow = 39;
-const template = document.getElementById(`templates`);
-const screens = template.content.children;
-const sectionMain = document.querySelector(`.main`);
-let startScreenIndex = 0;
+import renderScreen from "./renderscreen";
+import welcomeScreen from "./welcome";
+import artistScreen from "./artist";
+import genreScreen from "./genre";
 
-// Создание функции отрисовки заданного экрана
-const renderScreen = (num) => {
-  const node = screens[num].cloneNode(true);
-  sectionMain.innerHTML = ``;
-  sectionMain.appendChild(node);
-};
-renderScreen(startScreenIndex);
+import winScreen from "./win";
+import loseAttemptsScreen from "./lose-attempts";
+import loseLateScreen from "./lose-late";
 
-// Переключение экрана. Обработчик события.
-document.addEventListener(`keydown`, function (evt) {
-  if (!evt.altKey) {
-    return;
-  }
-  if (evt.keyCode === rightArrow && startScreenIndex < screens.length - 1) {
-    startScreenIndex += 1;
-    renderScreen(startScreenIndex);
-  } else if (evt.keyCode === leftArrow && startScreenIndex > 0) {
-    startScreenIndex -= 1;
-    renderScreen(startScreenIndex);
+const result = [winScreen, loseAttemptsScreen, loseLateScreen];
+
+// Загрузить начальный экран
+renderScreen(welcomeScreen);
+
+const main = document.querySelector(`.main`);
+
+main.addEventListener(`click`, (evt) => {
+  let target = evt.target;
+  // Начать игру: выбор артиста
+  if (target.classList.contains(`main-play`)) {
+    renderScreen(artistScreen);
+  // Выбор жанра
+  } if (target.parentNode.classList.contains(`main-answer`)) {
+    renderScreen(genreScreen);
+    const form = document.querySelector(`.genre`);
+    const formButton = form.querySelector(`.genre-answer-send`);
+    const formInputs = form.elements.answer;
+    formButton.disabled = true;
+
+    // Активация или деактивация кнопки, в зависимости от выбора пользователя
+    [...formInputs].forEach((element) => {
+      element.addEventListener(`change`, () => {
+        if ([...formInputs].some((node) => node.checked)) {
+          formButton.disabled = false;
+
+          formButton.addEventListener(`click`, () => {
+            const randomValue = Math.floor(Math.random() * 3);
+            // Показать экран : результаты(случайное значение).
+            renderScreen(result[randomValue]);
+
+            const replayButton = main.querySelector(`.main-replay`);
+            // Показать экран : экран приветствия.
+            replayButton.addEventListener(`click`, () => {
+              renderScreen(welcomeScreen);
+            });
+          });
+        } else {
+          formButton.disabled = true;
+        }
+      });
+    });
+
   }
 });

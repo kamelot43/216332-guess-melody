@@ -1,4 +1,4 @@
-import createElement from "./createelement.js";
+import createElement from "./createelement";
 
 const htmlMarkup = `
 <section class="main main--result">
@@ -10,4 +10,4 @@ const htmlMarkup = `
 </section>`;
 
 const loseAttemptsScreen = createElement(htmlMarkup);
-export default winScreen;
+export default loseAttemptsScreen;

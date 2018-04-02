@@ -1,4 +1,4 @@
-import createElement from "./createelement.js";
+import createElement from "./createelement";
 
 const htmlMarkup = `
 

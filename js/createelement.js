@@ -1,5 +1,5 @@
 const createElement = (data) => {
-  const template = document.getElementById(`templates`);
+  const template = document.createElement(`template`);
   template.innerHTML = data;
   return template.content;
 };
