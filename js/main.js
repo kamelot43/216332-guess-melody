@@ -36,14 +36,13 @@ const randomResult = () => {
   renderScreen(result[randomValue]);
 };
 
-
 main.addEventListener(`click`, (evt) => {
   let target = evt.target;
   // Начать игру: выбор артиста
   if (target.classList.contains(`main-play`)) {
     renderScreen(artistScreen);
   // Игровой экран : Выбор жанра
-  } if (target.parentNode.classList.contains(`main-answer`)) {
+  } else if (target.parentNode.classList.contains(`main-answer`)) {
     renderScreen(genreScreen);
     changeButtonStatus();
   // Игровой процесс : выбор ответа
@@ -56,5 +55,4 @@ main.addEventListener(`click`, (evt) => {
   } else if (target.classList.contains(`main-replay`)) {
     renderScreen(welcomeScreen);
   }
-
 });
