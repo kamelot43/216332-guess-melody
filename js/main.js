@@ -14,41 +14,38 @@ renderScreen(welcomeScreen);
 
 const main = document.querySelector(`.main`);
 
+// Вспомогательная функция для изменения статуса кнопки
+const changeButtonStatus = (param) => {
+  const formButton = document.querySelector(`.genre-answer-send`);
+  formButton.disabled = true;
+  if ((param) && [...param].some((node) => node.checked)) {
+    formButton.disabled = false;
+  }
+};
+
+
 main.addEventListener(`click`, (evt) => {
   let target = evt.target;
   // Начать игру: выбор артиста
   if (target.classList.contains(`main-play`)) {
     renderScreen(artistScreen);
-  // Выбор жанра
+  // Игровой экран : Выбор жанра
   } if (target.parentNode.classList.contains(`main-answer`)) {
     renderScreen(genreScreen);
+    changeButtonStatus();
+  // Игровой процесс : выбор ответа
+  } else if (target.tagName === `INPUT`) {
     const form = document.querySelector(`.genre`);
-    const formButton = form.querySelector(`.genre-answer-send`);
     const formInputs = form.elements.answer;
-    formButton.disabled = true;
-
-    // Активация или деактивация кнопки, в зависимости от выбора пользователя
-    [...formInputs].forEach((element) => {
-      element.addEventListener(`change`, () => {
-        if ([...formInputs].some((node) => node.checked)) {
-          formButton.disabled = false;
-
-          formButton.addEventListener(`click`, () => {
-            const randomValue = Math.floor(Math.random() * 3);
-            // Показать экран : результаты(случайное значение).
-            renderScreen(result[randomValue]);
-
-            const replayButton = main.querySelector(`.main-replay`);
-            // Показать экран : экран приветствия.
-            replayButton.addEventListener(`click`, () => {
-              renderScreen(welcomeScreen);
-            });
-          });
-        } else {
-          formButton.disabled = true;
-        }
-      });
-    });
-
+    changeButtonStatus([...formInputs]);
+  // Случайный исход игры
+  } else if (target.classList.contains(`genre-answer-send`)) {
+    evt.preventDefault();
+    const randomValue = Math.floor(Math.random() * 3);
+    // Показать экран : результаты(случайное значение).
+    renderScreen(result[randomValue]);
+  } else if (target.classList.contains(`main-replay`)) {
+    renderScreen(welcomeScreen);
   }
+
 });
