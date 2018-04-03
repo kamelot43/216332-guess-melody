@@ -18,9 +18,22 @@ const main = document.querySelector(`.main`);
 const changeButtonStatus = (param) => {
   const formButton = document.querySelector(`.genre-answer-send`);
   formButton.disabled = true;
-  if ((param) && [...param].some((node) => node.checked)) {
+  if ((param) && [...param].some((node) => node.checked === true)) {
     formButton.disabled = false;
   }
+};
+
+// Вспомогательная функция : изменения input
+const changeInputs = () => {
+  const form = document.querySelector(`.genre`);
+  const formInputs = form.elements.answer;
+  changeButtonStatus([...formInputs]);
+};
+
+// Вспомогательная функция : случайный результат игры
+const randomResult = () => {
+  const randomValue = Math.floor(Math.random() * 3);
+  renderScreen(result[randomValue]);
 };
 
 
@@ -35,15 +48,11 @@ main.addEventListener(`click`, (evt) => {
     changeButtonStatus();
   // Игровой процесс : выбор ответа
   } else if (target.tagName === `INPUT`) {
-    const form = document.querySelector(`.genre`);
-    const formInputs = form.elements.answer;
-    changeButtonStatus([...formInputs]);
+    changeInputs();
   // Случайный исход игры
   } else if (target.classList.contains(`genre-answer-send`)) {
     evt.preventDefault();
-    const randomValue = Math.floor(Math.random() * 3);
-    // Показать экран : результаты(случайное значение).
-    renderScreen(result[randomValue]);
+    randomResult();
   } else if (target.classList.contains(`main-replay`)) {
     renderScreen(welcomeScreen);
   }

@@ -9,5 +9,4 @@ const htmlMarkup = `
   <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
 </section>`;
 
-const loseLateScreen = createElement(htmlMarkup);
-export default loseLateScreen;
+export default createElement(htmlMarkup);

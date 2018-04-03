@@ -9,5 +9,4 @@ const htmlMarkup = `
   <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
 </section>`;
 
-const loseAttemptsScreen = createElement(htmlMarkup);
-export default loseAttemptsScreen;
+export default createElement(htmlMarkup);

@@ -1,5 +1,4 @@
 import createElement from "./createelement";
-
 const htmlMarkup = `
 <!-- Приветствие -->
 <section class="main main--welcome">
@@ -12,6 +11,4 @@ const htmlMarkup = `
     Удачи!
   </p>
 </section>`;
-
-const welcomeScreen = createElement(htmlMarkup);
-export default welcomeScreen;
+export default createElement(htmlMarkup);

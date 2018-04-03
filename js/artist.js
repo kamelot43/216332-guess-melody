@@ -1,5 +1,4 @@
 import createElement from "./createelement";
-
 const htmlMarkup = `
 <!-- Игра на выбор исполнителя -->
 <section class="main main--level main--level-artist">
@@ -62,5 +61,4 @@ const htmlMarkup = `
   </div>
 </section>`;
 
-const artistScreen = createElement(htmlMarkup);
-export default artistScreen;
+export default createElement(htmlMarkup);

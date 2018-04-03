@@ -3,5 +3,4 @@ const createElement = (data) => {
   template.innerHTML = data;
   return template.content;
 };
-
 export default createElement;

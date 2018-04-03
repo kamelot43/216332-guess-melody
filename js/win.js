@@ -1,5 +1,4 @@
 import createElement from "./createelement.js";
-
 const htmlMarkup = `
 <!-- Результат игры: выигрыш -->
 <section class="main main--result">
@@ -12,6 +11,4 @@ const htmlMarkup = `
   <span class="main-comparison">Вы заняли 2 место из 10. Это&nbsp;лучше чем у&nbsp;80%&nbsp;игроков</span>
   <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
 </section>`;
-
-const winScreen = createElement(htmlMarkup);
-export default winScreen;
+export default createElement(htmlMarkup);
