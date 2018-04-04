@@ -1,28 +1,58 @@
-const leftArrow = 37;
-const rightArrow = 39;
-const template = document.getElementById(`templates`);
-const screens = template.content.children;
-const sectionMain = document.querySelector(`.main`);
-let startScreenIndex = 0;
+import renderScreen from "./renderscreen";
+import welcomeScreen from "./welcome";
+import artistScreen from "./artist";
+import genreScreen from "./genre";
 
-// Создание функции отрисовки заданного экрана
-const renderScreen = (num) => {
-  const node = screens[num].cloneNode(true);
-  sectionMain.innerHTML = ``;
-  sectionMain.appendChild(node);
-};
-renderScreen(startScreenIndex);
+import winScreen from "./win";
+import loseAttemptsScreen from "./lose-attempts";
+import loseLateScreen from "./lose-late";
 
-// Переключение экрана. Обработчик события.
-document.addEventListener(`keydown`, function (evt) {
-  if (!evt.altKey) {
-    return;
+const result = [winScreen, loseAttemptsScreen, loseLateScreen];
+
+// Загрузить начальный экран
+renderScreen(welcomeScreen);
+
+const main = document.querySelector(`.main`);
+
+// Вспомогательная функция для изменения статуса кнопки
+const changeButtonStatus = (param) => {
+  const formButton = document.querySelector(`.genre-answer-send`);
+  formButton.disabled = true;
+  if ((param) && [...param].some((node) => node.checked === true)) {
+    formButton.disabled = false;
   }
-  if (evt.keyCode === rightArrow && startScreenIndex < screens.length - 1) {
-    startScreenIndex += 1;
-    renderScreen(startScreenIndex);
-  } else if (evt.keyCode === leftArrow && startScreenIndex > 0) {
-    startScreenIndex -= 1;
-    renderScreen(startScreenIndex);
+};
+
+// Вспомогательная функция : изменения input
+const changeInputs = () => {
+  const form = document.querySelector(`.genre`);
+  const formInputs = form.elements.answer;
+  changeButtonStatus([...formInputs]);
+};
+
+// Вспомогательная функция : случайный результат игры
+const randomResult = () => {
+  const randomValue = Math.floor(Math.random() * 3);
+  renderScreen(result[randomValue]);
+};
+
+main.addEventListener(`click`, (evt) => {
+  let target = evt.target;
+  // Начать игру: выбор артиста
+  if (target.classList.contains(`main-play`)) {
+    renderScreen(artistScreen);
+  // Игровой экран : Выбор жанра
+  } else if (target.parentNode.classList.contains(`main-answer`)) {
+    renderScreen(genreScreen);
+    changeButtonStatus();
+  // Игровой процесс : выбор ответа
+  } else if (target.tagName === `INPUT`) {
+    changeInputs();
+  // Случайный исход игры
+  } else if (target.classList.contains(`genre-answer-send`)) {
+    evt.preventDefault();
+    randomResult();
+  } else if (target.classList.contains(`main-replay`)) {
+    renderScreen(welcomeScreen);
   }
 });
