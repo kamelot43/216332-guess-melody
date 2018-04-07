@@ -107,3 +107,12 @@ gulp.task('assemble', ['clean'], function () {
 gulp.task('build', ['assemble'], function () {
   gulp.start('imagemin');
 });
+const mocha = require('gulp-mocha');
+gulp.task('test', function () {
+  return gulp
+    .src(['js/**/*.test.js'], { read: false })
+    .pipe(mocha({
+      compilers: ['js:babel-register'],
+      reporter: 'spec'
+    }));
+});
