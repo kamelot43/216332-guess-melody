@@ -41,7 +41,4 @@ describe(`return game statistic`, () => {
   it(`should return game is over`, () => {
     assert.equal(displayResult(statistics, gameOver), `У вас закончились все попытки. Ничего, повезёт в следующий раз!`);
   });
-  it(`should return game `, () => {
-    assert.equal(displayResult(statistics, []), -1);
-  });
 });
