@@ -14,9 +14,7 @@ export const calcPoints = (arr, note) => {
     return !current.success;
   });
 
-  if (arr.length !== INITIAL_GAME.success) {
-    return -1;
-  } else if (failAnswers.length > note) {
+  if (arr.length !== INITIAL_GAME.success || failAnswers.length > note) {
     return -1;
   }
 
