@@ -9,10 +9,10 @@ export const displayResult = (arr, player) => {
     return b - a;
   });
   // Место игорка в общем зачете
-  let index = cloneArrays.indexOf(player.points) + 1;
+  const index = cloneArrays.indexOf(player.points) + 1;
   // Общее количество игроков
-  let players = cloneArrays.length;
+  const players = cloneArrays.length;
   // Место игрока в общем зачете : статистика
-  let percent = Math.floor(((players - index) / players) * 100) + `%`;
+  const percent = Math.floor(((players - index) / players) * 100) + `%`;
   return `Вы заняли ${index} место из ${players} игроков. Это лучше, чем у ${percent} игроков`;
 };

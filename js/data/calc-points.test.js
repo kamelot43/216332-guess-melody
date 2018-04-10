@@ -3,8 +3,6 @@ import {calcPoints, INITIAL_GAME} from './calc-points';
 
 // Переменные для тестирования
 // Начальные значения игры
-
-
 export const slowCorrectAnswers = [
   {success: true, time: 35},
   {success: true, time: 35},
