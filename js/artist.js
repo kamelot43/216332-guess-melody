@@ -2,6 +2,7 @@ import createElement from "./createelement";
 const htmlMarkup = `
 <!-- Игра на выбор исполнителя -->
 <section class="main main--level main--level-artist">
+<header class="main-header">
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
       cx="390" cy="390" r="370"
@@ -18,6 +19,7 @@ const htmlMarkup = `
     <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
     <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
   </div>
+  </header>
 
   <div class="main-wrap">
     <h2 class="title main-title">Кто исполняет эту песню?</h2>

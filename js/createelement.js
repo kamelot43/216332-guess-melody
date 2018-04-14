@@ -1,6 +1,7 @@
 const createElement = (data) => {
-  const template = document.createElement(`template`);
-  template.innerHTML = data;
-  return template.content;
+  const container = document.createElement(`div`);
+  container.innerHTML = data;
+  container.classList.add(`main`);
+  return container;
 };
 export default createElement;
