@@ -89,7 +89,7 @@ export const levels = {
         id: `answer-1`,
         value: `val-1`,
         src: ``,
-        artist: `Дедюля`,
+        artist: `Дидюля`,
         answer: false
       },
       {

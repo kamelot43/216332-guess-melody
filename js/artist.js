@@ -26,7 +26,7 @@ ${header(state)}
                 alt="Пелагея" width="134" height="134">
            ${answer.artist}
          </label>
-       </div>`)};
+       </div>`).join(``)}
     </form>
   </div>
 </section>`;
