@@ -113,6 +113,7 @@ export const levels = {
     type: `genre`,
     audios: new Set([
       {
+        id: `a-1`,
         value: `answer-1`,
         artist: `Audionautix`,
         name: `Travel Light`,
@@ -121,6 +122,7 @@ export const levels = {
         answer: true
       },
       {
+        id: `a-2`,
         value: `answer-2`,
         artist: `Gunnar Olsen`,
         name: `Home Stretch`,
@@ -129,6 +131,7 @@ export const levels = {
         answer: true
       },
       {
+        id: `a-3`,
         value: `answer-3`,
         artist: `Riot`,
         name: `Level Plane`,
@@ -137,6 +140,7 @@ export const levels = {
         answer: true
       },
       {
+        id: `a-4`,
         value: `answer-4`,
         artist: `Kevin MacLeod`,
         name: `Long Stroll`,

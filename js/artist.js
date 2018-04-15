@@ -5,7 +5,7 @@ import {levels, initialState} from "./data/data";
 const getArtistScreen = (state, level) => `
 <!-- Игра на выбор исполнителя -->
 <section class="main main--level main--level-artist">
-${header(initialState)}
+${header(state)}
 <div class="main-wrap">
     <h2 class="title main-title">${level.title}</h2>
     <div class="player-wrapper">
