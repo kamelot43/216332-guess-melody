@@ -5,7 +5,7 @@ export const initialState = {
   time: 300
 };
 
-const levels = {
+export const levels = {
   'level-1': {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
