@@ -1,7 +1,7 @@
 // хранит начальное состояние игры
 export const initialState = {
   level: 1,
-  lives: 2,
+  lives: 3,
   time: 300
 };
 

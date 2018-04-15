@@ -1,6 +1,5 @@
-export const headerTemplate = () => {
-  return (
-    `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+export default (state) => {
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
       cx="390" cy="390" r="370"
       class="timer-line"
@@ -13,9 +12,7 @@ export const headerTemplate = () => {
     </div>
   </svg>
   <div class="main-mistakes">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-  </div>`
-  );
+  ${new Array(3 - state.lives)
+      .fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`)}
+  </div>`;
 };
