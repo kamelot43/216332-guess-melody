@@ -1,11 +1,13 @@
 import renderScreen from "./renderscreen";
 import welcomeScreen from "./welcome";
-import artistScreen from "./artist";
+import artistTemplate from "./artist";
 import genreScreen from "./genre";
 
 import winScreen from "./win";
 import loseAttemptsScreen from "./lose-attempts";
 import loseLateScreen from "./lose-late";
+import createElement from "./createelement";
+import {levels, initialState, changeState} from "./data/data";
 
 const result = [winScreen, loseAttemptsScreen, loseLateScreen];
 
@@ -40,7 +42,7 @@ main.addEventListener(`click`, (evt) => {
   let target = evt.target;
   // Начать игру: выбор артиста
   if (target.classList.contains(`main-play`)) {
-    renderScreen(artistScreen);
+    renderScreen(artistTemplate(changeState.getStage()));
   // Игровой экран : Выбор жанра
   } else if (target.parentNode.classList.contains(`main-answer`)) {
     renderScreen(genreScreen);

@@ -1,16 +1,19 @@
 import createElement from "./createelement";
 import header from "./header";
 import {levels, initialState} from "./data/data";
+import renderScreen from "./renderscreen";
 
-const getArtistScreen = (state, level) => `
+
+export default (game) => {
+  const template = `
 <!-- Игра на выбор исполнителя -->
 <section class="main main--level main--level-artist">
-${header(state)}
+${header(game)}
 <div class="main-wrap">
-    <h2 class="title main-title">${level.title}</h2>
+    <h2 class="title main-title">${levels[`level-` + game.level].title}</h2>
     <div class="player-wrapper">
       <div class="player">
-        <audio src= "${level.audio.src}" preload ></audio>
+        <audio src= "${levels[`level-` + game.level].audio.src}" preload ></audio>
         <button class="player-control player-control--pause"></button>
         <div class="player-track">
           <span class="player-status"></span>
@@ -18,17 +21,25 @@ ${header(state)}
       </div>
     </div>
     <form class="main-list">
-    ${[...level.answers].map((answer) =>
+    ${[...levels[`level-` + game.level].answers].map((it) =>
     ` <div class="main-answer-wrapper">
-         <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.value}"/>
-         <label class="main-answer" for="answer-1">
+         <input class="main-answer-r" type="radio" id="${it.id}" name="answer" value="${it.answer}"/>
+         <label class="main-answer" for="${it.id}">
            <img class="main-answer-preview" src="http://placehold.it/134x134"
                 alt="Пелагея" width="134" height="134">
-           ${answer.artist}
+           ${it.artist}
          </label>
        </div>`).join(``)}
     </form>
   </div>
 </section>`;
 
-export default createElement(getArtistScreen(initialState, levels[`level-1`]));
+  const artistNode = createElement(template);
+  const mainList = artistNode.querySelector(`.main-list`);
+
+  mainList.addEventListener(`click`, (evt) => {
+    console.log(`hello`);
+  });
+
+  return artistNode;
+};

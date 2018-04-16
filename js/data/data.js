@@ -5,6 +5,26 @@ export const initialState = {
   time: 300
 };
 
+// Изменяет текущее состояние
+export const changeState = {
+  getStage() {
+    return initialState;
+  },
+  setNextLevel(game) {
+    const newState = Object.assign({}, game);
+    newState.level += 1;
+    return newState;
+  },
+  changeLives(game, lives) {
+    const newLives = Object.assign({}, game);
+    newLives.lives = lives;
+    return newLives;
+  }
+};
+
+// хранит игровые очки пользователя
+export const stats = [];
+
 export const levels = {
   'level-1': {
     title: `Кто исполняет эту песню ?`,
@@ -19,21 +39,18 @@ export const levels = {
     answers: new Set([
       {
         id: `answer-1`,
-        value: `val-1`,
         src: ``,
         artist: `Пелагея`,
         answer: false
       },
       {
         id: `answer-2`,
-        value: `val-2`,
         src: ``,
         artist: `Боб Марли`,
         answer: false
       },
       {
         id: `answer-3`,
-        value: `val-3`,
         src: ``,
         artist: `Kevin MacLeod`,
         answer: true
@@ -53,21 +70,18 @@ export const levels = {
     answers: new Set([
       {
         id: `answer-1`,
-        value: `val-1`,
         src: ``,
         artist: `Metalica`,
         answer: false
       },
       {
         id: `answer-2`,
-        value: `val-2`,
         src: ``,
         artist: `Jingle Punks`,
         answer: true
       },
       {
         id: `answer-3`,
-        value: `val-3`,
         src: ``,
         artist: `Kevin MacLeod`,
         answer: false
@@ -87,21 +101,18 @@ export const levels = {
     answers: new Set([
       {
         id: `answer-1`,
-        value: `val-1`,
         src: ``,
         artist: `Дидюля`,
         answer: false
       },
       {
         id: `answer-2`,
-        value: `val-2`,
         src: ``,
         artist: `Audionautix`,
         answer: true
       },
       {
         id: `answer-3`,
-        value: `val-3`,
         src: ``,
         artist: `Дима Билан`,
         answer: false
@@ -114,7 +125,6 @@ export const levels = {
     audios: new Set([
       {
         id: `a-1`,
-        value: `answer-1`,
         artist: `Audionautix`,
         name: `Travel Light`,
         src: `https://www.youtube.com/audiolibrary_download?vid=a127d9b7de8a17cf`,
@@ -123,7 +133,6 @@ export const levels = {
       },
       {
         id: `a-2`,
-        value: `answer-2`,
         artist: `Gunnar Olsen`,
         name: `Home Stretch`,
         src: `https://www.youtube.com/audiolibrary_download?vid=bcbe5be936a32fb1`,
@@ -132,7 +141,6 @@ export const levels = {
       },
       {
         id: `a-3`,
-        value: `answer-3`,
         artist: `Riot`,
         name: `Level Plane`,
         src: `https://www.youtube.com/audiolibrary_download?vid=dfb828f40096184c`,
@@ -163,21 +171,18 @@ export const levels = {
     answers: new Set([
       {
         id: `answer-1`,
-        value: `val-1`,
         src: ``,
         artist: `Riot`,
         answer: true
       },
       {
         id: `answer-2`,
-        value: `val-2`,
         src: ``,
         artist: `Пелагея`,
         answer: false
       },
       {
         id: `answer-3`,
-        value: `val-3`,
         src: ``,
         artist: `Иван Дорн`,
         answer: false
