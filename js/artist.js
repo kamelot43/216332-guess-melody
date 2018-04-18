@@ -10,10 +10,10 @@ export default (game) => {
 <section class="main main--level main--level-artist">
 ${header(game)}
 <div class="main-wrap">
-    <h2 class="title main-title">${levels[`level-` + game.level].title}</h2>
+    <h2 class="title main-title">${levels[game.level].title}</h2>
     <div class="player-wrapper">
       <div class="player">
-        <audio src= "${levels[`level-` + game.level].audio.src}" preload ></audio>
+        <audio src= "${levels[game.level].audio.src}" preload ></audio>
         <button class="player-control player-control--pause"></button>
         <div class="player-track">
           <span class="player-status"></span>
@@ -21,7 +21,7 @@ ${header(game)}
       </div>
     </div>
     <form class="main-list">
-    ${[...levels[`level-` + game.level].answers].map((it) =>
+    ${[...levels[game.level].answers].map((it) =>
     ` <div class="main-answer-wrapper">
          <input class="main-answer-r" type="radio" id="${it.id}" name="answer" value="${it.answer}"/>
          <label class="main-answer" for="${it.id}">
@@ -35,11 +35,6 @@ ${header(game)}
 </section>`;
 
   const artistNode = createElement(template);
-  const mainList = artistNode.querySelector(`.main-list`);
-
-  mainList.addEventListener(`click`, (evt) => {
-    console.log(`hello`);
-  });
 
   return artistNode;
 };
