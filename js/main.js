@@ -16,21 +16,6 @@ renderScreen(welcomeScreen);
 
 const main = document.querySelector(`.main`);
 
-// Вспомогательная функция для изменения статуса кнопки
-const changeButtonStatus = (param) => {
-  const formButton = document.querySelector(`.genre-answer-send`);
-  formButton.disabled = true;
-  if ((param) && [...param].some((node) => node.checked === true)) {
-    formButton.disabled = false;
-  }
-};
-
-// Вспомогательная функция : изменения input
-const changeInputs = () => {
-  const form = document.querySelector(`.genre`);
-  const formInputs = form.elements.answer;
-  changeButtonStatus([...formInputs]);
-};
 
 // Вспомогательная функция : случайный результат игры
 const randomResult = () => {
@@ -71,7 +56,7 @@ main.addEventListener(`click`, (evt) => {
       changeState.setNextLevel(currentState);
       changeState.getStage();
       changeResult.expResult(true);
-      if (currentState.idx > 5) {
+      if (currentState.idx > 6) {
         renderScreen(loseAttemptsScreen);
       } else {
         findType(currentState);
@@ -89,12 +74,12 @@ main.addEventListener(`click`, (evt) => {
 
     }
 
-  } else if (target.classList.contains(`main-replay`)) {
+  } //
+
+
+  else if (target.classList.contains(`main-replay`)) {
     renderScreen(welcomeScreen);
     changeState.resetState();
     console.log(currentState);
-  }/* else if (target.tagName === `INPUT`) {
-    changeInputs();
-  // Случайный исход игры
-}*/
+  }
 });
