@@ -1,11 +1,7 @@
 import createElement from "./createelement";
 import header from "./header";
-import {levels, initialState, changeState, currentState, findType, resultDefault, changeResult, stats} from "./data/data";
+import {levels, initialState} from "./data/data";
 import renderScreen from "./renderscreen";
-
-import winScreen from "./win";
-import loseAttemptsScreen from "./lose-attempts";
-import loseLateScreen from "./lose-late";
 
 export default (game) => {
   const template = `
@@ -15,8 +11,10 @@ export default (game) => {
     <div class="main-wrap">
       <h2 class="title">${levels[game.level].title}</h2>
       <form class="genre">
-      ${[...levels[game.level].audios].map((it) =>
-    `<div class="genre-answer">
+      ${[...levels[game.level].audios]
+      .map(
+          (it) =>
+            `<div class="genre-answer">
          <div class="player-wrapper">
            <div class="player">
              <audio src= "${it.src}" preload></audio>
@@ -26,16 +24,19 @@ export default (game) => {
              </div>
            </div>
          </div>
-         <input type="checkbox" name="answer" value="${it.answer}" id="${it.id}">
+         <input type="checkbox" name="answer" value="${it.answer}" id="${
+  it.id
+}">
          <label class="genre-answer-check" for="${it.id}"></label>
-       </div>`).join(``)}
+       </div>`
+      )
+      .join(``)}
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>
     </div>
   </section>`;
 
   const genreNode = createElement(template);
-
 
   const form = genreNode.querySelector(`.genre`);
   const formInputs = form.elements.answer;
@@ -44,7 +45,7 @@ export default (game) => {
   const changeButtonStatus = (param) => {
     const formButton = genreNode.querySelector(`.genre-answer-send`);
     formButton.disabled = true;
-    if ((param) && [...param].some((node) => node.checked === true)) {
+    if (param && [...param].some((node) => node.checked === true)) {
       formButton.disabled = false;
     }
   };
@@ -64,6 +65,4 @@ export default (game) => {
   });
 
   return genreNode;
-
-
 };

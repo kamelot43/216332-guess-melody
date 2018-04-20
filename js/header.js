@@ -1,3 +1,4 @@
+import {levels, initialState} from "./data/data";
 export default (state) => {
   return `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
@@ -12,7 +13,7 @@ export default (state) => {
     </div>
   </svg>
   <div class="main-mistakes">
-  ${new Array(3 - state.lives)
+  ${new Array(initialState.MAX_LIVES - state.lives)
       .fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`).join(``)}
   </div>`;
 };

@@ -2,39 +2,25 @@ import artistTemplate from "../artist";
 import genreTemplate from "../genre";
 import renderScreen from "../renderscreen";
 
+import winScreen from "../win";
+import loseAttemptsScreen from "../lose-attempts";
 
 // хранит начальное состояние игры
 export const initialState = {
   level: `level-1`,
   lives: 3,
   idx: 1,
-  time: 300
+  time: 300,
+  MAX_LEVEL: 10,
+  MAX_LIVES: 3,
+  STANDART_TIME: 35
 };
 
 // Текущее состояние
 export const currentState = Object.assign({}, initialState);
 
-// Изменяет текущее состояние
-export const changeState = {
-  getStage() {
-    return currentState;
-  },
-  setNextLevel(game) {
-    currentState.idx += 1;
-    currentState.level = `level-` + currentState.idx;
-  },
-  setLives(game) {
-    currentState.lives -= 1;
-    return currentState;
-  },
-  resetState() {
-    currentState.level = initialState.level,
-    currentState.lives = initialState.lives,
-    currentState.idx = initialState.idx,
-    currentState.time = initialState.time;
-    return currentState;
-  }
-};
+// Массив ответов игороков
+const statistics = [4, 5, 8, 10, 11];
 
 // хранит игровые очки пользователя
 export const stats = [];
@@ -368,21 +354,69 @@ export const levels = {
   }
 };
 
-// Отрисовать экран в зависимости от типа игры
+
+// Базовое значение : ответ пользователя
+export const resultDefault = {
+  success: true,
+  time: initialState.STANDART_TIME
+};
+
+// Изменяет текущее состояние
+export const changeState = {
+  getStage() {
+    return currentState;
+  },
+  setNextLevel(game) {
+    currentState.idx += 1;
+    currentState.level = `level-` + currentState.idx;
+  },
+  setLives(game) {
+    currentState.lives -= 1;
+    return currentState;
+  },
+  resetState() {
+    currentState.level = initialState.level,
+    currentState.lives = initialState.lives,
+    currentState.idx = initialState.idx,
+    currentState.time = initialState.time;
+    return currentState;
+  }
+};
+
+// Изменяет текущее состояние : изменение очков пользователя + добавление очков в общий игровой зачет
+export const changeResult = {
+  expResult(answer) {
+    const currentResult = Object.assign({}, resultDefault);
+    currentState.success = answer;
+    stats.push(currentResul);
+  }
+};
+
+// Отрисовать экран в зависимости от типа игры : выбор артиста или выбор песен одного жанра
 export const findType = (game) => {
   levels[game.level].type == `artist` ? renderScreen(artistTemplate(game)) : renderScreen(genreTemplate(game));
 };
 
-export const resultDefault = {
-  success: true,
-  time: 35
-};
-
-// Изменяет текущее состояние
-export const changeResult = {
-  expResult(game) {
-    const currentState = Object.assign({}, resultDefault);
-    currentState.success = game;
-    stats.push(currentState);
+// Функция принимает ответ пользователя
+// Переход на следующий уровень если ответ правильный + подсчет очков
+// Пересчет жизней если ответ неправильный + подсчет очков
+export const gamePlay = (currentState, answer) => {
+  if (answer) {
+    changeState.setNextLevel(currentState);
+    changeState.getStage();
+    changeResult.expResult(true);
+    if (currentState.idx > initialState.MAX_LEVEL) {
+      renderScreen(winScreen);
+    } else {
+      findType(currentState);
+    }
+  } else {
+    changeState.setLives(currentState);
+    changeResult.expResult(false);
+    if (currentState.lives <= 0) {
+      renderScreen(loseAttemptsScreen);
+    } else {
+      findType(currentState);
+    }
   }
 };
