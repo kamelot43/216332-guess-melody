@@ -76,10 +76,46 @@ main.addEventListener(`click`, (evt) => {
 
   } //
 
+  else if (target.classList.contains(`genre-answer-send`)) {
+    evt.preventDefault();
+    const form = document.querySelector(`.genre`);
+    const formInputs = form.elements.answer;
 
-  else if (target.classList.contains(`main-replay`)) {
+    // Массив, содержащий в себе все правильные ответы
+    const correctArrays = [...levels[currentState.level].audios].filter(function (number) {
+      return number.answer === true;
+    }).length;
+
+    const checkedInputs = [...formInputs].filter(function (it) {
+      return it.checked === true;
+    }).length;
+
+    // Все выделенные кнопки + правильный ответ
+    const correctAnswers = [...formInputs].filter(function (number) {
+      return number.checked === true && number.value === `true`;
+    }).length;
+
+
+    if (correctArrays === checkedInputs && correctArrays === correctAnswers) {
+      changeState.setNextLevel(currentState);
+      changeState.getStage();
+      changeResult.expResult(true);
+      if (currentState.idx > 6) {
+        renderScreen(loseAttemptsScreen);
+      } else {
+        findType(currentState);
+      }
+    } else {
+      changeState.setLives(currentState);
+      changeResult.expResult(false);
+      if (currentState.lives <= 0) {
+        renderScreen(loseAttemptsScreen);
+      } else {
+        findType(currentState);
+      }
+    }
+  } else if (target.classList.contains(`main-replay`)) {
     renderScreen(welcomeScreen);
     changeState.resetState();
-    console.log(currentState);
   }
 });
