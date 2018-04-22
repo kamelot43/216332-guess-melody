@@ -1,22 +1,17 @@
 // Переменные для тестирования
 // Начальные значения игры
 export const INITIAL_GAME = {
-  life: 3,
   quickAnswer: 30,
   success: 10,
   point: 1,
   doublePoints: 2
 };
 
-export default (arr, note) => {
+export default (arr, lives) => {
 
-  const failAnswers = arr.filter(function (current) {
-    return !current.success;
-  });
-
-  /* if (arr.length !== INITIAL_GAME.success || failAnswers.length > note) {
+  if (arr.length < INITIAL_GAME.success || lives <= 0) {
     return -1;
-  }*/
+  }
 
   return arr.reduce(function (sum, current) {
     if (current.success && current.time < INITIAL_GAME.quickAnswer) {

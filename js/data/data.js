@@ -1,23 +1,13 @@
-import artistTemplate from "../artist";
-import genreTemplate from "../genre";
-import renderScreen from "../renderscreen";
-
-import winScreen from "../win";
-import loseAttemptsScreen from "../lose-attempts";
-
-import calcPoints from "./calc-points";
-import displayResult from "./display-result";
-
 // хранит начальное состояние игры
 export const initialState = {
   level: `level-1`,
   lives: 3,
   idx: 1,
   time: 300,
-  MAX_LEVEL: 10,
+  MAX_LEVEL: 11,
   MAX_LIVES: 3,
   STANDART_TIME: 35,
-  BASE_TIME : 50
+  BASE_TIME: 50
 };
 
 // Текущее состояние
@@ -26,11 +16,11 @@ export const currentState = Object.assign({}, initialState);
 // Массив ответов игороков
 export const statistics = [4, 5, 8, 10, 11];
 
-// хранит игровые очки пользователя
+// хранит ответы пользователя
 export const stats = [];
 
-export const levels = {
-  'level-1': {
+export default {
+  "level-1": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -61,7 +51,7 @@ export const levels = {
       }
     ])
   },
-  'level-2': {
+  "level-2": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -92,7 +82,7 @@ export const levels = {
       }
     ])
   },
-  'level-3': {
+  "level-3": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -123,7 +113,7 @@ export const levels = {
       }
     ])
   },
-  'level-4': {
+  "level-4": {
     title: `Выберите инди-рок треки`,
     type: `genre`,
     audios: new Set([
@@ -162,7 +152,7 @@ export const levels = {
       }
     ])
   },
-  'level-5': {
+  "level-5": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -193,7 +183,7 @@ export const levels = {
       }
     ])
   },
-  'level-6': {
+  "level-6": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -224,7 +214,7 @@ export const levels = {
       }
     ])
   },
-  'level-7': {
+  "level-7": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -255,7 +245,7 @@ export const levels = {
       }
     ])
   },
-  'level-8': {
+  "level-8": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -286,7 +276,7 @@ export const levels = {
       }
     ])
   },
-  'level-9': {
+  "level-9": {
     title: `Выберите инди-рок треки`,
     type: `genre`,
     audios: new Set([
@@ -325,7 +315,7 @@ export const levels = {
       }
     ])
   },
-  'level-10': {
+  "level-10": {
     title: `Кто исполняет эту песню ?`,
     type: `artist`,
     audio: {
@@ -357,7 +347,6 @@ export const levels = {
     ])
   }
 };
-
 
 // Базовое значение : ответ пользователя
 export const resultDefault = {
@@ -365,94 +354,10 @@ export const resultDefault = {
   time: initialState.STANDART_TIME
 };
 
-// Изменяет текущее состояние
-export const changeState = {
-  getStage() {
-    return currentState;
-  },
-  setNextLevel(game) {
-    currentState.idx += 1;
-    currentState.level = `level-` + currentState.idx;
-  },
-  setLives(game) {
-    currentState.lives -= 1;
-    return currentState;
-  },
-  resetState() {
-    currentState.level = initialState.level,
-    currentState.lives = initialState.lives,
-    currentState.idx = initialState.idx,
-    currentState.time = initialState.time;
-    return currentState;
-  }
-};
-
-// Изменяет текущее состояние : изменение очков пользователя + добавление очков в общий игровой зачет
-export const changeResult = {
-  expResult(answer) {
-    const currentResult = Object.assign({}, resultDefault);
-    currentResult.success = answer;
-    stats.push(currentResult);
-  }
-};
-
-// Отрисовать экран в зависимости от типа игры : выбор артиста или выбор песен одного жанра
-export const findType = (game) => {
-  levels[game.level].type == `artist` ? renderScreen(artistTemplate(game)) : renderScreen(genreTemplate(game));
-};
-
 const baseObject = {
-  notes : initialState.lives,
-  points : 1,
+  notes: initialState.lives,
+  points: 1,
   time: initialState.BASE_TIME
-}
+};
 
 export const currentObject = Object.assign({}, baseObject);
-
-
-export const calculate = (data, state,) => {
-  const gamePoints = calcPoints(data, state.lives);
-  currentObject.notes = state.lives,
-  currentObject.points = gamePoints
-  return currentObject;
-};
-
-//Воспроизведение/остановка трека
-export const setPauseAndPlay = (btn) => {
-btn.addEventListener(`click`, (evt) => {
-  evt.preventDefault();
-  let target = evt.target;
-  if (target.classList.contains(`player-control--pause`)) {
-    target.classList.remove(`player-control--pause`);
-    target.previousElementSibling.pause();
-  } else {
-    target.classList.add(`player-control--pause`);
-    target.previousElementSibling.play();
-  }
-});
-};
-
-// Функция принимает ответ пользователя
-// Переход на следующий уровень если ответ правильный + подсчет очков
-// Пересчет жизней если ответ неправильный + подсчет очков
-export const gamePlay = (currentState, answer) => {
-  if (answer) {
-    changeState.setNextLevel(currentState);
-    changeState.getStage();
-    changeResult.expResult(true);
-    if (currentState.idx > initialState.MAX_LEVEL) {
-      calculate(stats, currentState);
-      renderScreen(winScreen(currentObject));
-    } else {
-      findType(currentState);
-    }
-  } else {
-    changeState.setLives(currentState);
-    changeResult.expResult(false);
-    if (currentState.lives <= 0) {
-      renderScreen(loseAttemptsScreen);
-    } else {
-      findType(currentState);
-    }
-  }
-};

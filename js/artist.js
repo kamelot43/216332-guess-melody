@@ -1,7 +1,7 @@
 import createElement from "./createelement";
 import header from "./header";
-import {levels, initialState, setPauseAndPlay} from "./data/data";
-import renderScreen from "./renderscreen";
+import levels from "./data/data";
+import {setPauseAndPlay} from "./data/utils";
 
 
 export default (game) => {

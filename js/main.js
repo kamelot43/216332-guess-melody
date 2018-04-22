@@ -1,23 +1,16 @@
 import renderScreen from "./renderscreen";
 import welcomeScreen from "./welcome";
-import artistTemplate from "./artist";
-import genreTemplate from "./genre";
 
-import winScreen from "./win";
-import loseAttemptsScreen from "./lose-attempts";
-import loseLateScreen from "./lose-late";
-import createElement from "./createelement";
-import {
-  levels,
-  initialState,
-  changeState,
+import levels, {
   currentState,
-  findType,
-  resultDefault,
-  changeResult,
-  stats,
-  gamePlay
+  initialState,
+  stats
 } from "./data/data";
+
+import gamePlay, {
+  changeState,
+  findType
+} from "./data/utils";
 
 // Загрузить начальный экран
 renderScreen(welcomeScreen);
@@ -63,6 +56,7 @@ main.addEventListener(`click`, (evt) => {
     }
   } else if (target.classList.contains(`main-replay`)) {
     renderScreen(welcomeScreen);
-    changeState.resetState();
+    changeState.resetState(currentState, initialState);
+    changeState.resetStats(stats);
   }
 });

@@ -1,4 +1,4 @@
-import {levels, initialState} from "./data/data";
+import {initialState} from "./data/data";
 export default (state) => {
   return `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
