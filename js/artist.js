@@ -1,6 +1,6 @@
 import createElement from "./createelement";
 import header from "./header";
-import {levels, initialState} from "./data/data";
+import {levels, initialState, setPauseAndPlay} from "./data/data";
 import renderScreen from "./renderscreen";
 
 
@@ -14,7 +14,7 @@ ${header(game)}
     <div class="player-wrapper">
       <div class="player">
         <audio src= "${levels[game.level].audio.src}" preload ></audio>
-        <button class="player-control player-control--pause"></button>
+        <button class="player-control"></button>
         <div class="player-track">
           <span class="player-status"></span>
         </div>
@@ -35,6 +35,8 @@ ${header(game)}
 </section>`;
 
   const artistNode = createElement(template);
+  const playerControl = artistNode.querySelector(`.player-control`);
+  setPauseAndPlay(playerControl);
 
   return artistNode;
 };

@@ -1,6 +1,6 @@
 import createElement from "./createelement";
 import header from "./header";
-import {levels, initialState} from "./data/data";
+import {levels, initialState, setPauseAndPlay} from "./data/data";
 import renderScreen from "./renderscreen";
 
 export default (game) => {
@@ -18,15 +18,13 @@ export default (game) => {
          <div class="player-wrapper">
            <div class="player">
              <audio src= "${it.src}" preload></audio>
-             <button class="player-control player-control--pause"></button>
+             <button class="player-control"></button>
              <div class="player-track">
                <span class="player-status"></span>
              </div>
            </div>
          </div>
-         <input type="checkbox" name="answer" value="${it.answer}" id="${
-  it.id
-}">
+         <input type="checkbox" name="answer" value="${it.answer}" id="${it.id}">
          <label class="genre-answer-check" for="${it.id}"></label>
        </div>`
       )
@@ -40,6 +38,12 @@ export default (game) => {
 
   const form = genreNode.querySelector(`.genre`);
   const formInputs = form.elements.answer;
+
+  const playerControl = genreNode.querySelectorAll(`.player-control`);
+
+  [...playerControl].forEach((it) => {
+    setPauseAndPlay(it);
+  });
 
   // Вспомогательная функция для изменения статуса кнопки
   const changeButtonStatus = (param) => {

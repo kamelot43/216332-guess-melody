@@ -417,6 +417,21 @@ export const calculate = (data, state,) => {
   return currentObject;
 };
 
+//Воспроизведение/остановка трека
+export const setPauseAndPlay = (btn) => {
+btn.addEventListener(`click`, (evt) => {
+  evt.preventDefault();
+  let target = evt.target;
+  if (target.classList.contains(`player-control--pause`)) {
+    target.classList.remove(`player-control--pause`);
+    target.previousElementSibling.pause();
+  } else {
+    target.classList.add(`player-control--pause`);
+    target.previousElementSibling.play();
+  }
+});
+};
+
 // Функция принимает ответ пользователя
 // Переход на следующий уровень если ответ правильный + подсчет очков
 // Пересчет жизней если ответ неправильный + подсчет очков
