@@ -29,10 +29,9 @@ export const changeResult = {
 };
 
 // Отрисовать экран в зависимости от типа игры : выбор артиста или выбор песен одного жанра
-export const findType = (game) => {
-  levels[game.level].type === `artist`
-    ? renderScreen(artistTemplate(game))
-    : renderScreen(genreTemplate(game));
+export const renderActualScreen = (game) => {
+  const actualScreen = levels[game.level].type === `artist` ? renderScreen(artistTemplate(game)) : renderScreen(genreTemplate(game));
+  return actualScreen;
 };
 
 // Изменяет текущее состояние
@@ -88,7 +87,7 @@ const gamePlay = (state, answer) => {
       calculate(stats, state);
       renderScreen(winScreen(currentObject));
     } else {
-      findType(state);
+      renderActualScreen(state);
     }
   } else {
     changeState.setLives(state);
@@ -96,7 +95,7 @@ const gamePlay = (state, answer) => {
     if (currentState.lives <= 0) {
       renderScreen(loseAttemptsScreen);
     } else {
-      findType(state);
+      renderActualScreen(state);
     }
   }
 };

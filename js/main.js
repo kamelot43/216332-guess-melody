@@ -9,7 +9,7 @@ import levels, {
 
 import gamePlay, {
   changeState,
-  findType
+  renderActualScreen
 } from "./data/utils";
 
 // Загрузить начальный экран
@@ -21,7 +21,7 @@ main.addEventListener(`click`, (evt) => {
   let target = evt.target;
   // Начать игру:
   if (target.classList.contains(`main-play`)) {
-    findType(currentState);
+    renderActualScreen(currentState);
   } else if (target.classList.contains(`main-answer-r`)) {
     if (target.getAttribute(`value`) === `true`) {
       gamePlay(currentState, true);
