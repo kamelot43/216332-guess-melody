@@ -8,15 +8,15 @@ export const INITIAL_GAME = {
   doublePoints: 2
 };
 
-export const calcPoints = (arr, note) => {
+export default (arr, note) => {
 
   const failAnswers = arr.filter(function (current) {
     return !current.success;
   });
 
-  if (arr.length !== INITIAL_GAME.success || failAnswers.length > note) {
+  /* if (arr.length !== INITIAL_GAME.success || failAnswers.length > note) {
     return -1;
-  }
+  }*/
 
   return arr.reduce(function (sum, current) {
     if (current.success && current.time < INITIAL_GAME.quickAnswer) {

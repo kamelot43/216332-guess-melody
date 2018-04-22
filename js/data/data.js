@@ -5,6 +5,9 @@ import renderScreen from "../renderscreen";
 import winScreen from "../win";
 import loseAttemptsScreen from "../lose-attempts";
 
+import calcPoints from "./calc-points";
+import displayResult from "./display-result";
+
 // хранит начальное состояние игры
 export const initialState = {
   level: `level-1`,
@@ -13,14 +16,15 @@ export const initialState = {
   time: 300,
   MAX_LEVEL: 10,
   MAX_LIVES: 3,
-  STANDART_TIME: 35
+  STANDART_TIME: 35,
+  BASE_TIME : 50
 };
 
 // Текущее состояние
 export const currentState = Object.assign({}, initialState);
 
 // Массив ответов игороков
-const statistics = [4, 5, 8, 10, 11];
+export const statistics = [4, 5, 8, 10, 11];
 
 // хранит игровые очки пользователя
 export const stats = [];
@@ -387,14 +391,30 @@ export const changeState = {
 export const changeResult = {
   expResult(answer) {
     const currentResult = Object.assign({}, resultDefault);
-    currentState.success = answer;
-    stats.push(currentResul);
+    currentResult.success = answer;
+    stats.push(currentResult);
   }
 };
 
 // Отрисовать экран в зависимости от типа игры : выбор артиста или выбор песен одного жанра
 export const findType = (game) => {
   levels[game.level].type == `artist` ? renderScreen(artistTemplate(game)) : renderScreen(genreTemplate(game));
+};
+
+const baseObject = {
+  notes : initialState.lives,
+  points : 1,
+  time: initialState.BASE_TIME
+}
+
+export const currentObject = Object.assign({}, baseObject);
+
+
+export const calculate = (data, state,) => {
+  const gamePoints = calcPoints(data, state.lives);
+  currentObject.notes = state.lives,
+  currentObject.points = gamePoints
+  return currentObject;
 };
 
 // Функция принимает ответ пользователя
@@ -406,7 +426,8 @@ export const gamePlay = (currentState, answer) => {
     changeState.getStage();
     changeResult.expResult(true);
     if (currentState.idx > initialState.MAX_LEVEL) {
-      renderScreen(winScreen);
+      calculate(stats, currentState);
+      renderScreen(winScreen(currentObject));
     } else {
       findType(currentState);
     }

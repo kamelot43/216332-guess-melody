@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {calcPoints, INITIAL_GAME} from './calc-points';
+import calcPoints from './calc-points';
 
 // Переменные для тестирования
 // Начальные значения игры
@@ -51,12 +51,12 @@ export const emptyArray = [
 
 describe(`calculate game points`, () => {
   it(`should return right points for all correct answers`, () => {
-    assert.equal(calcPoints(slowCorrectAnswers, INITIAL_GAME.life), 10);
+    assert.equal(calcPoints(slowCorrectAnswers, 3), 10);
   });
   it(`should return right points for all correct and quick answers`, () => {
-    assert.equal(calcPoints(quickCorrectAnswers, INITIAL_GAME.life), 20);
+    assert.equal(calcPoints(quickCorrectAnswers, 3), 20);
   });
   it(`should return -1 at not finish game`, () => {
-    assert.equal(calcPoints(incorrectAnswers, INITIAL_GAME.life), -1);
+    assert.equal(calcPoints(incorrectAnswers, 3), -1);
   });
 });

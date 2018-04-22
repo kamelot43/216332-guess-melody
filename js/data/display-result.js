@@ -1,4 +1,4 @@
-export const displayResult = (arr, player) => {
+export default (arr, player) => {
   if (player.notes <= 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   } else if (player.time <= 0) {
