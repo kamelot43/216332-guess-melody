@@ -57,6 +57,6 @@ describe(`calculate game points`, () => {
     assert.equal(calcPoints(quickCorrectAnswers, 3), 20);
   });
   it(`should return -1 at not finish game`, () => {
-    assert.equal(calcPoints(incorrectAnswers, 3), -1);
+    assert.equal(calcPoints(incorrectAnswers, 0), -1);
   });
 });
