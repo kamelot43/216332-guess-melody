@@ -1,58 +1,62 @@
 import renderScreen from "./renderscreen";
 import welcomeScreen from "./welcome";
-import artistScreen from "./artist";
-import genreScreen from "./genre";
 
-import winScreen from "./win";
-import loseAttemptsScreen from "./lose-attempts";
-import loseLateScreen from "./lose-late";
+import levels, {
+  currentState,
+  initialState,
+  stats
+} from "./data/data";
 
-const result = [winScreen, loseAttemptsScreen, loseLateScreen];
+import gamePlay, {
+  changeState,
+  renderActualScreen
+} from "./data/utils";
 
 // Загрузить начальный экран
 renderScreen(welcomeScreen);
 
 const main = document.querySelector(`.main`);
 
-// Вспомогательная функция для изменения статуса кнопки
-const changeButtonStatus = (param) => {
-  const formButton = document.querySelector(`.genre-answer-send`);
-  formButton.disabled = true;
-  if ((param) && [...param].some((node) => node.checked === true)) {
-    formButton.disabled = false;
-  }
-};
-
-// Вспомогательная функция : изменения input
-const changeInputs = () => {
-  const form = document.querySelector(`.genre`);
-  const formInputs = form.elements.answer;
-  changeButtonStatus([...formInputs]);
-};
-
-// Вспомогательная функция : случайный результат игры
-const randomResult = () => {
-  const randomValue = Math.floor(Math.random() * 3);
-  renderScreen(result[randomValue]);
-};
-
 main.addEventListener(`click`, (evt) => {
   let target = evt.target;
-  // Начать игру: выбор артиста
+  // Начать игру:
   if (target.classList.contains(`main-play`)) {
-    renderScreen(artistScreen);
-  // Игровой экран : Выбор жанра
-  } else if (target.parentNode.classList.contains(`main-answer`)) {
-    renderScreen(genreScreen);
-    changeButtonStatus();
-  // Игровой процесс : выбор ответа
-  } else if (target.tagName === `INPUT`) {
-    changeInputs();
-  // Случайный исход игры
+    renderActualScreen(currentState);
+  } else if (target.classList.contains(`main-answer-r`)) {
+    if (target.getAttribute(`value`) === `true`) {
+      gamePlay(currentState, true);
+    } else {
+      gamePlay(currentState, false);
+    }
   } else if (target.classList.contains(`genre-answer-send`)) {
     evt.preventDefault();
-    randomResult();
+    const form = document.querySelector(`.genre`);
+    const formInputs = form.elements.answer;
+
+    // Массив, содержащий в себе все правильные ответы
+    const correctArrays = [...levels[currentState.level].audios].filter(
+        function (number) {
+          return number.answer === true;
+        }
+    ).length;
+
+    const checkedInputs = [...formInputs].filter(function (it) {
+      return it.checked === true;
+    }).length;
+
+    // Все выделенные кнопки + правильный ответ
+    const correctAnswers = [...formInputs].filter(function (number) {
+      return number.checked === true && number.value === `true`;
+    }).length;
+
+    if (correctArrays === checkedInputs && correctArrays === correctAnswers) {
+      gamePlay(currentState, true);
+    } else {
+      gamePlay(currentState, false);
+    }
   } else if (target.classList.contains(`main-replay`)) {
     renderScreen(welcomeScreen);
+    changeState.resetState(currentState, initialState);
+    changeState.resetStats(stats);
   }
 });
