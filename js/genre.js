@@ -1,17 +1,26 @@
-import createElement from "./createelement";
-import header from "./header";
+import HeaderView from "./header";
 import levels from "./data/data";
-import {setPauseAndPlay} from "./data/utils";
+import setPauseAndPlay from "./data/utils";
+import AbstractView from "./abstract-view";
 
-export default (game) => {
-  const template = `
+export default class GenreView extends AbstractView {
+
+  constructor(game) {
+    super();
+    this.game = game;
+    this.levels = levels;
+  }
+
+  get template() {
+    const header = new HeaderView(this.game);
+    return `
   <!-- Игра на выбор жанра -->
   <section class="main main--level main--level-genre">
-  ${header(game)}
+   ${header.template};
     <div class="main-wrap">
-      <h2 class="title">${levels[game.level].title}</h2>
+      <h2 class="title">${this.levels[this.game.level].title}</h2>
       <form class="genre">
-      ${[...levels[game.level].audios].map((it) =>
+      ${[...this.levels[this.game.level].audios].map((it) =>
     `<div class="genre-answer">
          <div class="player-wrapper">
            <div class="player">
@@ -29,39 +38,29 @@ export default (game) => {
       </form>
     </div>
   </section>`;
+  }
 
-  const genreNode = createElement(template);
-
-  const form = genreNode.querySelector(`.genre`);
-
-  const playerControl = genreNode.querySelectorAll(`.player-control`);
-
-  [...playerControl].forEach((it) => {
-    setPauseAndPlay(it);
-  });
-
-  // Вспомогательная функция для изменения статуса кнопки
-  const changeButtonStatus = (param) => {
-    const formButton = genreNode.querySelector(`.genre-answer-send`);
-    formButton.disabled = true;
-    if (param && [...param].some((node) => node.checked === true)) {
-      formButton.disabled = false;
-    }
-  };
-  changeButtonStatus();
-
-  // Вспомогательная функция : изменения input
-  const changeInputs = () => {
+  bind() {
+    const form = this.element.querySelector(`.genre`);
     const formInputs = form.elements.answer;
-    changeButtonStatus([...formInputs]);
-  };
+    const submitBtn = this.element.querySelector(`.genre-answer-send`);
+    submitBtn.disabled = true;
 
-  form.addEventListener(`click`, (evt) => {
-    let target = evt.target;
-    if (target.tagName === `INPUT`) {
-      changeInputs();
-    }
-  });
 
-  return genreNode;
-};
+    [...formInputs].forEach((elem) => {
+      elem.addEventListener(`change`, this.onAnswerClick);
+    });
+
+    submitBtn.addEventListener(`click`, this.onSubmitClick);
+    const playerBtn = this.element.querySelector(`.player-control`);
+    playerBtn.addEventListener(`click`, this.onControlPlayer);
+  }
+
+  onAnswerClick() {}
+
+  onSubmitClick() {}
+
+  onControlPlayer() {}
+
+
+}

@@ -1,3 +1,4 @@
+/*
 // хранит начальное состояние игры
 export const initialState = {
   level: `level-1`,
@@ -18,6 +19,7 @@ export const statistics = [4, 5, 8, 10, 11];
 
 // хранит ответы пользователя
 export const stats = [];
+*/
 
 export default {
   "level-1": {
@@ -347,7 +349,7 @@ export default {
     ])
   }
 };
-
+/*
 // Базовое значение : ответ пользователя
 export const resultDefault = {
   success: true,
@@ -361,3 +363,4 @@ const baseObject = {
 };
 
 export const currentObject = Object.assign({}, baseObject);
+*/

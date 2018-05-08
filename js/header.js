@@ -1,6 +1,15 @@
-import {initialState} from "./data/data";
-export default (state) => {
-  return `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+import store from "./data/store";
+import AbstractView from "./abstract-view";
+
+export default class HeaderView extends AbstractView {
+  constructor(game) {
+    super();
+    this.game = game;
+  }
+
+  get template() {
+    return `
+    <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
       cx="390" cy="390" r="370"
       class="timer-line"
@@ -13,7 +22,7 @@ export default (state) => {
     </div>
   </svg>
   <div class="main-mistakes">
-  ${new Array(initialState.MAX_LIVES - state.lives)
-      .fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`).join(``)}
-  </div>`;
-};
+      ${new Array(store.initialState.MAX_LIVES - this.game.lives).fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`).join(``)}
+    </div>`;
+  }
+}
