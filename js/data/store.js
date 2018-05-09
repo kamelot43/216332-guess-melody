@@ -7,21 +7,21 @@ class GameStore {
       lives: 3,
       idx: 1,
       time: 300,
-      MAX_LEVEL: 11,
-      MAX_LIVES: 3,
-      STANDART_TIME: 35,
-      BASE_TIME: 50
+      maxLevel: 11,
+      maxLives: 3,
+      standartTime: 35,
+      baseTime: 50
     };
     this.currentState = Object.assign({}, this.initialState);
     this.resultDefault = {
       success: true,
-      time: this.initialState.STANDART_TIME
+      time: this.initialState.standartTime
     };
-    this.currentResult = Object.assign({}, this.resultDefault);
-    this.BaseObject = {
+
+    this.baseObject = {
       notes: this.initialState.lives,
       points: 1,
-      time: this.initialState.BASE_TIME
+      time: this.initialState.baseTime
     };
     this.currentObject = Object.assign({}, this.baseObject);
     this.statistics = [4, 5, 8, 10, 11];
@@ -29,8 +29,9 @@ class GameStore {
   }
 
   updateStats(answer) {
-    this.currentResult.success = answer;
-    this.stats.push(this.currentResult);
+    const currentResult = Object.assign({}, this.resultDefault);
+    currentResult.success = answer;
+    this.stats.push(currentResult);
   }
 
   getNextLevel() {

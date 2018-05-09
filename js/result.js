@@ -51,7 +51,7 @@ export default class ResultView extends AbstractView {
     } else {
       return `<div class="main-stat">За&nbsp;3&nbsp;минуты и 25&nbsp;секунд
         <br>вы&nbsp;набрали ${this.state.points} баллов (0 быстрых)
-        <br>совершив ${store.initialState.MAX_LIVES -
+        <br>совершив ${store.initialState.maxLives -
           this.state.notes} ошибки</div>
       <span class="main-comparison">${displayResult(
       store.statistics,

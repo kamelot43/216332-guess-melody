@@ -22,7 +22,7 @@ export default class HeaderView extends AbstractView {
     </div>
   </svg>
   <div class="main-mistakes">
-      ${new Array(store.initialState.MAX_LIVES - this.game.lives).fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`).join(``)}
+      ${new Array(store.initialState.maxLives - this.game.lives).fill(`<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`).join(``)}
     </div>`;
   }
 }

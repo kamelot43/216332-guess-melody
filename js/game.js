@@ -43,7 +43,7 @@ class Game {
   createArtistGame() {
     this.view.onAnswerClick = (evt) => {
       evt.preventDefault();
-      let target = evt.target;
+      const target = evt.target;
 
       const isTrue = () => {
         return target.getAttribute(`value`) === `true`
@@ -80,17 +80,17 @@ class Game {
       const formInputs = form.elements.answer;
 
       const correctArrays = [...levels[store.currentState.level].audios].filter(
-          function (number) {
-            return number.answer === true;
+          (number) => {
+            return !!number.answer;
           }
       ).length;
 
-      const checkedInputs = [...formInputs].filter(function (it) {
-        return it.checked === true;
+      const checkedInputs = [...formInputs].filter((it) => {
+        return it.checked;
       }).length;
 
       // Все выделенные кнопки + правильный ответ
-      const correctAnswers = [...formInputs].filter(function (number) {
+      const correctAnswers = [...formInputs].filter((number) => {
         return number.checked === true && number.value === `true`;
       }).length;
 
@@ -138,7 +138,7 @@ class Game {
   }
 
   checkLevel() {
-    if (store.currentState.idx >= store.initialState.MAX_LEVEL) {
+    if (store.currentState.idx >= store.initialState.maxLevel) {
       this.displayResult();
     } else {
       this.init();
