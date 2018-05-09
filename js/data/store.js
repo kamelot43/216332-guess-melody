@@ -18,7 +18,7 @@ class GameStore {
       time: this.initialState.STANDART_TIME
     };
     this.currentResult = Object.assign({}, this.resultDefault);
-    this.baseObject = {
+    this.BaseObject = {
       notes: this.initialState.lives,
       points: 1,
       time: this.initialState.BASE_TIME
@@ -42,7 +42,6 @@ class GameStore {
   getLives() {
     this.currentState.lives -= 1;
     return this.currentState;
-
   }
 
   resetState() {
@@ -50,6 +49,7 @@ class GameStore {
     this.currentState.lives = this.initialState.lives;
     this.currentState.idx = this.initialState.idx;
     this.currentState.time = this.initialState.time;
+    this.resetStats();
     return this.currentState;
   }
 

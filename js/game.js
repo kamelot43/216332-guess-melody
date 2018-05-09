@@ -5,7 +5,8 @@ import setPauseAndPlay from "./data/utils";
 import store from "./data/store";
 import ArtistView from "./artist";
 import GenreView from "./genre";
-import WinScreenView from "./win";
+import ResultView from "./result";
+import WelcomeView from "./welcome";
 
 class Game {
   constructor(state) {
@@ -43,7 +44,14 @@ class Game {
     this.view.onAnswerClick = (evt) => {
       evt.preventDefault();
       let target = evt.target;
-      target.getAttribute(`value`) === `true` ? this.checkAnswer(true) : this.checkAnswer(false);
+
+      const isTrue = () => {
+        return target.getAttribute(`value`) === `true`
+          ? this.checkAnswer(true)
+          : this.checkAnswer(false);
+      };
+
+      isTrue();
     };
 
     this.view.onControlPlayer = (evt) => {
@@ -53,8 +61,6 @@ class Game {
   }
 
   createGenreGame() {
-
-
     this.view.onAnswerClick = (evt) => {
       evt.preventDefault();
 
@@ -66,7 +72,6 @@ class Game {
       if ([...formInputs].some((node) => node.checked === true)) {
         submitBtn.disabled = false;
       }
-
     };
 
     this.view.onSubmitClick = (evt) => {
@@ -89,7 +94,14 @@ class Game {
         return number.checked === true && number.value === `true`;
       }).length;
 
-      correctArrays === checkedInputs && correctArrays === correctAnswers ? this.checkAnswer(true) : this.checkAnswer(false);
+      const isCorrect = () => {
+        return correctArrays === checkedInputs &&
+          correctArrays === correctAnswers
+          ? this.checkAnswer(true)
+          : this.checkAnswer(false);
+      };
+
+      isCorrect();
     };
 
     this.view.onControlPlayer = (evt) => {
@@ -98,9 +110,28 @@ class Game {
     };
   }
 
+  displayResult() {
+    store.getPoints();
+    this.result = new ResultView(store.currentObject);
+    this.result.element.classList.add(`main`);
+
+    this.result.onReplayClick = () => {
+      const welcomeView = new WelcomeView();
+      welcomeView.element.classList.add(`main`);
+      welcomeView.onPlayClick = () => {
+        store.resetState();
+        this.updateHeader();
+        game.init();
+      };
+      renderScreen(welcomeView.element);
+    };
+
+    renderScreen(this.result.element);
+  }
+
   checkLives() {
     if (store.currentState.lives <= 0) {
-      renderScreen(loseAttemptsScreen);
+      this.displayResult();
     } else {
       this.updateHeader();
     }
@@ -108,10 +139,7 @@ class Game {
 
   checkLevel() {
     if (store.currentState.idx >= store.initialState.MAX_LEVEL) {
-      store.getPoints();
-      this.win = new WinScreenView(store.currentObject);
-      this.win.element.classList.add(`main`);
-      renderScreen(this.win.element);
+      this.displayResult();
     } else {
       this.init();
     }

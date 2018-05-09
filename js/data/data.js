@@ -1,26 +1,3 @@
-/*
-// хранит начальное состояние игры
-export const initialState = {
-  level: `level-1`,
-  lives: 3,
-  idx: 1,
-  time: 300,
-  MAX_LEVEL: 11,
-  MAX_LIVES: 3,
-  STANDART_TIME: 35,
-  BASE_TIME: 50
-};
-
-// Текущее состояние
-export const currentState = Object.assign({}, initialState);
-
-// Массив ответов игороков
-export const statistics = [4, 5, 8, 10, 11];
-
-// хранит ответы пользователя
-export const stats = [];
-*/
-
 export default {
   "level-1": {
     title: `Кто исполняет эту песню ?`,
@@ -349,18 +326,3 @@ export default {
     ])
   }
 };
-/*
-// Базовое значение : ответ пользователя
-export const resultDefault = {
-  success: true,
-  time: initialState.STANDART_TIME
-};
-
-const baseObject = {
-  notes: initialState.lives,
-  points: 1,
-  time: initialState.BASE_TIME
-};
-
-export const currentObject = Object.assign({}, baseObject);
-*/

@@ -1,6 +1,5 @@
 import HeaderView from "./header";
 import levels from "./data/data";
-import setPauseAndPlay from "./data/utils";
 import AbstractView from "./abstract-view";
 
 export default class GenreView extends AbstractView {
